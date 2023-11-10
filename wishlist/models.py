@@ -1,10 +1,11 @@
 from django.db import models
 from django.urls import reverse
+from DreamBoard.DreamBoard import settings
 # Create your models here.
 
 
 class Status(models.Model):
-    "выносная модель статуса пользователя"
+    """выносная модель статуса пользователя"""
     status = models.CharField(max_length=100, verbose_name="статус")
 
     def __str__(self):
@@ -19,7 +20,7 @@ class Status(models.Model):
 
 
 class CountPeople(models.Model):
-    "модель настройки колво людей для прем акка"
+    """модель настройки колво людей для прем акка"""
     count_people = models.IntegerField(verbose_name='кол-во людей')
 
     def __str__(self):
@@ -31,9 +32,9 @@ class CountPeople(models.Model):
 
 
 class Giver(models.Model):
-    "модель дарителя"
-    list_wish_id =
-    user_id =
+    """модель дарителя"""
+    list_wish_id = models.ForeignKey("WishList", on_delete=models.CASCADE)
+    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return "popa"
@@ -44,9 +45,9 @@ class Giver(models.Model):
 
 
 class Booking(models.Model):
-    "модель бронирования"
-    goods_list_wish_id =
-    giver_id =
+    """модель бронирования"""
+    goods_list_wish_id = models.ForeignKey("GoodsInWishList", on_delete=models.CASCADE)
+    giver_id = models.ForeignKey(Giver, on_delete=models.CASCADE)
 
     def __str__(self):
         return "jepa"
@@ -56,10 +57,10 @@ class Booking(models.Model):
         verbose_name_plural = "бронирование"
 
 
-class GoodsInListWish(models.Model):
-    " модель товары в списке желаний"
-    list_wish_id =
-    goods_id =
+class GoodsInWishList(models.Model):
+    """ модель товары в списке желаний"""
+    list_wish_id = models.ForeignKey("WishList", on_delete=models.CASCADE)
+    goods_id = models.ForeignKey("Goods", on_delete=models.CASCADE)
 
     def __str__(self):
         return "aaaaa ya ystal"
@@ -70,5 +71,20 @@ class GoodsInListWish(models.Model):
 
 
 class Goods(models.Model):
+    """модель товаров"""
     title = models.CharField(max_length=250, verbose_name='Название')
-    link =
+    link = models.TextField()
+
+    def __str__(self):
+        return "tovar"
+
+    class Meta:
+        verbose_name = "товар"
+        verbose_name_plural = "товары"
+
+
+class WishList(models.Model):
+    """модель вишлиста"""
+    title = models.CharField(max_length=250, verbose_name='Название')
+    count_user = models.IntegerField(verbose_name='кол-во людей в списке пользователей')
+    owner_user_id =models.ForeignKey(settings.AUTH_USER_MODEL)
