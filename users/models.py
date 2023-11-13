@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from DreamBoard.wishlist.models import Status
+from wishlist.models import Status
 # Create your models here.
 
 
