@@ -87,5 +87,5 @@ class Goods(models.Model):
 class WishList(models.Model):
     """модель вишлиста"""
     title = models.CharField(max_length=250, verbose_name='Название')
-    count_user = models.IntegerField(verbose_name='кол-во людей в списке пользователей')
+    #count_user = models.IntegerField(verbose_name='кол-во людей в списке пользователей')
     owner_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
